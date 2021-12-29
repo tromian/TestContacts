@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestContacts</string>
+    <string name="random_user_api_url">https://randomuser.me/api/</string>
 </resources>
