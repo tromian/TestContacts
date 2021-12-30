@@ -6,11 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tromian.test.testcontacts.domain.Contact
 import com.tromian.test.testcontacts.domain.ContactRepository
-import com.tromian.test.testcontacts.utils.Loading
-import com.tromian.test.testcontacts.utils.Result
-import com.tromian.test.testcontacts.utils.Success
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -19,9 +15,6 @@ class MainViewModel(
 
     private val _contacts: MutableLiveData<List<Contact>> = MutableLiveData()
     val contacts: LiveData<List<Contact>> = _contacts
-
-//    private val _dataResult: MutableLiveData<Result<List<Contact>>> = MutableLiveData(Loading())
-//    val dataResult: LiveData<Result<List<Contact>>> = _dataResult
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,10 +27,10 @@ class MainViewModel(
         }
     }
 
-    private fun updateLiveData(){
+    fun updateLiveData() {
         viewModelScope.launch {
             val localContacts = repository.getContactListFromDB()
-            if (localContacts.isNotEmpty()){
+            if (localContacts.isNotEmpty()) {
                 _contacts.postValue(localContacts)
             }
         }
@@ -59,12 +52,4 @@ class MainViewModel(
             updateLiveData()
         }
     }
-
-    fun editContact(contact: Contact) {
-        viewModelScope.launch {
-            repository.editContact(contact)
-            updateLiveData()
-        }
-    }
-
 }

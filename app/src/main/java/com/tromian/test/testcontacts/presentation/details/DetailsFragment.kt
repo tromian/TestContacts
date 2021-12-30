@@ -11,12 +11,9 @@ import com.bumptech.glide.Glide
 import com.tromian.test.testcontacts.R
 import com.tromian.test.testcontacts.appComponent
 import com.tromian.test.testcontacts.databinding.FragmentDetailsBinding
-import com.tromian.test.testcontacts.databinding.FragmentMainBinding
 import com.tromian.test.testcontacts.domain.Contact
 import com.tromian.test.testcontacts.domain.ContactRepository
 import com.tromian.test.testcontacts.presentation.ViewModelsFactory
-import com.tromian.test.testcontacts.presentation.details.edit.EditViewModel
-import com.tromian.test.testcontacts.presentation.main.MainViewModel
 import javax.inject.Inject
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -24,6 +21,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var contact: Contact
+
     @Inject
     lateinit var repository: ContactRepository
 
@@ -35,6 +33,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         super.onAttach(context)
         context.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentDetailsBinding.bind(view)
@@ -48,7 +47,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         _binding = null
     }
 
-    private fun bindViews(contact: Contact){
+    private fun bindViews(contact: Contact) {
         Glide.with(this).load(contact.pictureUrl).into(binding.ivAvatar)
         binding.tvFirstName.text = contact.firstName
         binding.tvLastName.text = contact.lastName
@@ -56,10 +55,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.tvEmail.text = contact.email
 
         binding.btnEdit.setOnClickListener {
-            val action = DetailsFragmentDirections.actionDetailsFragmentToEditDetailsFragment(contact)
+            val action =
+                DetailsFragmentDirections.actionDetailsFragmentToEditDetailsFragment(contact)
             findNavController().navigate(action)
         }
         binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.mainFragment)
+        }
+
+        binding.btnDelete.setOnClickListener {
+            viewModel.deleteContact(contact)
             findNavController().navigateUp()
         }
     }

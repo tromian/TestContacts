@@ -29,12 +29,12 @@
     <fragment
         android:id="@+id/editDetailsFragment"
         android:name="com.tromian.test.testcontacts.presentation.details.edit.EditDetailsFragment"
-        android:label="EditDetailsFragment" >
-        <action
-            android:id="@+id/action_editDetailsFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+        android:label="EditDetailsFragment">
         <argument
             android:name="contact"
             app:argType="com.tromian.test.testcontacts.domain.Contact" />
+        <action
+            android:id="@+id/action_editDetailsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 </navigation>

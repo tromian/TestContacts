@@ -1,7 +1,5 @@
 package com.tromian.test.testcontacts.domain
 
-import kotlinx.coroutines.flow.Flow
-
 interface ContactRepository {
 
     fun saveContactsToDB(list: List<Contact>)

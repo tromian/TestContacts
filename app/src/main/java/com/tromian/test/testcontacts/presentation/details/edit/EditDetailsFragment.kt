@@ -59,8 +59,23 @@ class EditDetailsFragment : Fragment(R.layout.fragment_details_edit) {
             findNavController().navigateUp()
         }
 
-        binding.btnSava.setOnClickListener {
-
+        binding.btnSave.setOnClickListener {
+            val editedContact = getEditedContact()
+            viewModel.editContact(editedContact)
+            val action = EditDetailsFragmentDirections.actionEditDetailsFragmentToDetailsFragment(
+                editedContact
+            )
+            findNavController().navigate(action)
         }
+    }
+
+    private fun getEditedContact(): Contact {
+        return Contact(
+            firstName = binding.inputFirstName.text.toString(),
+            lastName = binding.inputLastName.text.toString(),
+            phone = binding.inputPhoneNumber.text.toString(),
+            email = binding.inputEmail.text.toString(),
+            pictureUrl = contact.pictureUrl
+        )
     }
 }

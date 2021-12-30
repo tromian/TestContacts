@@ -11,7 +11,7 @@ interface ContactsDAO {
     @Query("delete from contacts")
     fun clearContactTable()
 
-    @Query("select * from contacts")
+    @Query("select * from contacts order by firstName asc")
     fun getContactList() : List<ContactEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
