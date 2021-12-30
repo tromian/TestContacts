@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_grapf_application"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.tromian.test.testcontacts.presentation.main.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <argument
+            android:name="contact"
+            app:argType="com.tromian.test.testcontacts.domain.Contact" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.tromian.test.testcontacts.presentation.details.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="contact"
+            app:argType="com.tromian.test.testcontacts.domain.Contact" />
+        <action
+            android:id="@+id/action_detailsFragment_to_editDetailsFragment"
+            app:destination="@id/editDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDetailsFragment"
+        android:name="com.tromian.test.testcontacts.presentation.details.edit.EditDetailsFragment"
+        android:label="EditDetailsFragment" >
+        <action
+            android:id="@+id/action_editDetailsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <argument
+            android:name="contact"
+            app:argType="com.tromian.test.testcontacts.domain.Contact" />
+    </fragment>
+</navigation>

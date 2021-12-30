@@ -6,9 +6,9 @@ import retrofit2.http.Query
 
 interface RandomUserApi {
 
-    @GET
+    @GET("api/")
     suspend fun getContactList(
-        @Query(value = "results") results: Int = DEFAULT_CONTACTS_AMOUNT
+       @Query(value = "results") results: Int = DEFAULT_CONTACTS_AMOUNT
     ): ContactListResponse
 
     companion object {
