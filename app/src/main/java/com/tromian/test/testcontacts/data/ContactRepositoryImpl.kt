@@ -10,7 +10,7 @@ import com.tromian.test.testcontacts.utils.NetworkConnection
 import com.tromian.test.testcontacts.utils.toDomain
 import com.tromian.test.testcontacts.utils.toEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class ContactRepositoryImpl @Inject constructor(
 ) : ContactRepository {
 
     private fun contactTableIsNotEmpty(): Boolean{
-        return (db.contactsDao().getContactsCount()>0)
+        return (db.contactsDao().getContactsCount() > 0)
     }
 
     override fun saveContactsToDB(list: List<Contact>) {
@@ -32,21 +32,18 @@ class ContactRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun getContactListFromDB(): List<Contact> {
-        return if (contactTableIsNotEmpty()){
-            db.contactsDao().getContactList().map {
-                it.toDomain()
-            }
-        }else emptyList()
-    }
+    override fun getContactListFromDB(): Flow<List<Contact>> =
+        db.contactsDao().getContactList().map { list ->
+            list.map { it.toDomain() }
+        }
 
     override suspend fun getContactListFromApi(): List<Contact> {
-        return if (NetworkConnection.isNetworkAvailable(appContext)){
+        return if (NetworkConnection.isNetworkAvailable(appContext)) {
             try {
                 api.getContactList().contacts.map {
                     it.toDomain()
                 }
-            }catch (e: HttpException) {
+            } catch (e: HttpException) {
                 e.message?.let { Log.e("http", it) }
                 emptyList()
             } catch (e: IOException) {

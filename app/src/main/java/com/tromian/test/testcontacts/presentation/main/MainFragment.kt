@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.tromian.test.testcontacts.appComponent
 import com.tromian.test.testcontacts.databinding.FragmentMainBinding
 import com.tromian.test.testcontacts.domain.ContactRepository
 import com.tromian.test.testcontacts.presentation.ViewModelsFactory
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -42,7 +44,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = FragmentMainBinding.bind(view)
         val rvContactList = binding.rvMain
         rvContactList.adapter = adapter
-        viewModel.updateLiveData()
         val swipeCallback = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 deleteItem(viewHolder.adapterPosition)
@@ -50,9 +51,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
         val itemTouchHelper = ItemTouchHelper(swipeCallback)
         itemTouchHelper.attachToRecyclerView(rvContactList)
-        viewModel.contacts.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-        })
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.listContact.collectLatest {
+                adapter.submitList(it)
+            }
+        }
+
         binding.btnLoadList.setOnClickListener {
             viewModel.loadRemoteContacts()
         }

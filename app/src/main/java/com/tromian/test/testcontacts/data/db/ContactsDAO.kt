@@ -1,6 +1,7 @@
 package com.tromian.test.testcontacts.data.db
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ContactsDAO {
@@ -12,7 +13,7 @@ interface ContactsDAO {
     fun clearContactTable()
 
     @Query("select * from contacts order by firstName asc")
-    fun getContactList() : List<ContactEntity>
+    fun getContactList(): Flow<List<ContactEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveContactList(list: List<ContactEntity>)
