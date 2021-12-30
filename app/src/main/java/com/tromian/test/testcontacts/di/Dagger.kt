@@ -7,6 +7,9 @@ import com.tromian.test.testcontacts.data.ContactRepositoryImpl
 import com.tromian.test.testcontacts.data.db.ContactsDB
 import com.tromian.test.testcontacts.data.network.RandomUserApi
 import com.tromian.test.testcontacts.domain.ContactRepository
+import com.tromian.test.testcontacts.presentation.details.DetailsFragment
+import com.tromian.test.testcontacts.presentation.details.edit.EditDetailsFragment
+import com.tromian.test.testcontacts.presentation.main.MainFragment
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -24,6 +27,10 @@ annotation class RandomContactBaseUrl
 @Component(modules = [AppModule::class])
 @Singleton
 interface AppComponent {
+
+    fun inject(fragment: MainFragment)
+    fun inject(fragment: DetailsFragment)
+    fun inject(fragment: EditDetailsFragment)
 
     @Component.Factory
     interface Builder {
@@ -60,12 +67,12 @@ class NetworkModule {
         baseUrl: String
     ): RandomUserApi {
 
-        val tmdbClient = OkHttpClient()
+        val client = OkHttpClient()
             .newBuilder()
             .build()
 
         val retrofit: Retrofit = Retrofit.Builder()
-            .client(tmdbClient)
+            .client(client)
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
