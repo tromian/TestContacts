@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">TestContacts</string>
     <string name="random_user_api_url">https://randomuser.me/</string>
+    <string name="edit">Edit</string>
+    <string name="back">Back</string>
+    <string name="delete">Delete</string>
+    <string name="email">Email</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="last_name">Last Name</string>
+    <string name="name">name</string>
+    <string name="first_name">First Name</string>
 </resources>

@@ -21,10 +21,6 @@ class ContactRepositoryImpl @Inject constructor(
     private val appContext: Application,
 ) : ContactRepository {
 
-    private fun contactTableIsNotEmpty(): Boolean{
-        return (db.contactsDao().getContactsCount() > 0)
-    }
-
     override fun saveContactsToDB(list: List<Contact>) {
         db.contactsDao().clearContactTable()
         db.contactsDao().saveContactList(list.map {
