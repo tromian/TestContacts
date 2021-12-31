@@ -60,7 +60,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             findNavController().navigate(action)
         }
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
+            findNavController().navigateUp()
         }
 
         binding.btnDelete.setOnClickListener {
