@@ -75,7 +75,8 @@ class EditDetailsFragment : Fragment(R.layout.fragment_details_edit) {
             lastName = binding.inputLastName.text.toString(),
             phone = binding.inputPhoneNumber.text.toString(),
             email = binding.inputEmail.text.toString(),
-            pictureUrl = contact.pictureUrl
+            pictureUrl = contact.pictureUrl,
+            id = contact.id
         )
     }
 }

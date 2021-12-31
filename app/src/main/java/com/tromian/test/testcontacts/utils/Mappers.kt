@@ -6,6 +6,7 @@ import com.tromian.test.testcontacts.domain.Contact
 
 fun ContactJson.toDomain() : Contact {
     return Contact(
+        id = this.hashCode(),
         email = this.email,
         firstName = this.name.first,
         lastName = this.name.last,
@@ -16,6 +17,7 @@ fun ContactJson.toDomain() : Contact {
 
 fun Contact.toEntity() : ContactEntity {
     return ContactEntity(
+        id = this.id,
         email = this.email,
         firstName = this.firstName,
         lastName = this.lastName,
@@ -26,6 +28,7 @@ fun Contact.toEntity() : ContactEntity {
 
 fun ContactEntity.toDomain() : Contact {
     return Contact(
+        id = this.id,
         email = this.email,
         firstName = this.firstName,
         lastName = this.lastName,

@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Contact(
+    val id: Int,
     val email: String,
     val firstName: String,
     val lastName: String,
